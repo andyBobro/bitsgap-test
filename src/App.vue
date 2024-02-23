@@ -3,9 +3,9 @@ import PlaceOrderForm from "@/components/PlaceOrderForm.vue";
 </script>
 
 <template>
-  <div class="h-full grid place-items-center">
-    <div class="w-80 px-5 py-4 bg-white">
-      <PlaceOrderForm/>
+  <div class="grid h-full place-items-center">
+    <div class="w-80 bg-white px-3 pb-4 pt-6">
+      <PlaceOrderForm />
     </div>
   </div>
 </template>

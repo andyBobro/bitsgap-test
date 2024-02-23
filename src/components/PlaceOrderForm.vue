@@ -2,25 +2,36 @@
 import { computed } from "vue";
 import NumberInput from "@/shared/components/NumberInput/NumberInput.vue";
 import TakeProfit from "@/components/TakeProfit.vue";
-import Button from "@/shared/components/Button/Button.vue";
-import { BASE_CURRENCY, QUOTE_CURRENCY } from "@/constants.ts";
-import { store } from "@/store";
+import Button from "@/shared/components/SharedButton/SharedButton.vue";
+import { BASE_CURRENCY, QUOTE_CURRENCY } from "@/utils/constants";
+import {
+  price,
+  setPrice,
+  amount,
+  setAmount,
+  setTotal,
+  activeOrderSide,
+  setOrderSide,
+  total,
+  validate,
+} from "@/store";
 import PlaceOrderTypeSwitch from "@/components/PlaceOrderTypeSwitch.vue";
 import InfoIcon from "@/shared/icons/InfoIcon/InfoIcon.vue";
 
 const submitButtonText = computed(() => {
-  return store.activeOrderSide === "buy"
+  return activeOrderSide.value === "buy"
     ? `Buy ${BASE_CURRENCY}`
-    : `Sell ${QUOTE_CURRENCY}`;
+    : `Sell ${BASE_CURRENCY}`;
 });
 
 const submit = () => {
   console.log("submit");
+  validate();
 };
 </script>
 
 <template>
-  <form method="post" @submit="submit" class="grid gap-4">
+  <form method="post" @submit.prevent="submit" class="grid gap-4">
     <div>
       <div class="flex items-center gap-2">
         <span class="text-sm text-base-600">Market direction</span>
@@ -29,16 +40,16 @@ const submit = () => {
 
       <PlaceOrderTypeSwitch
         class="mt-2"
-        :modelValue="store.activeOrderSide"
-        @update:modelValue="store.setOrderSide($event)"
+        :modelValue="activeOrderSide"
+        @update:modelValue="setOrderSide($event)"
       />
     </div>
     <div>
       <NumberInput
         id="price"
         :label="`Price, ${QUOTE_CURRENCY}`"
-        :modelValue="store.price"
-        @update:modelValue="store.setPrice($event)"
+        :modelValue="price"
+        @update:modelValue="setPrice($event)"
         autofocus
       />
     </div>
@@ -46,16 +57,16 @@ const submit = () => {
       <NumberInput
         id="amount"
         :label="`Amount, ${BASE_CURRENCY}`"
-        :modelValue="store.amount"
-        @update:modelValue="store.setAmount($event)"
+        :modelValue="amount"
+        @update:modelValue="setAmount($event)"
       />
     </div>
     <div>
       <NumberInput
         id="total"
         :label="`Total, ${QUOTE_CURRENCY}`"
-        :modelValue="store.total()"
-        @update:modelValue="store.setTotal($event)"
+        :modelValue="total"
+        @update:modelValue="setTotal($event)"
       />
     </div>
 
