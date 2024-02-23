@@ -18,7 +18,7 @@ const handleToggle = (orderType: OrderSide) => {
     <Button
       size="small"
       fullWidth
-      :outline="activeOrderSide !== 'buy'"
+      :outline="activeOrderSide != 'buy'"
       @click="handleToggle('buy')"
     >
       Buy

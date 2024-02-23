@@ -21,7 +21,7 @@ import InfoIcon from "@/shared/icons/InfoIcon/InfoIcon.vue";
 const submitButtonText = computed(() => {
   return activeOrderSide.value === "buy"
     ? `Buy ${BASE_CURRENCY}`
-    : `Sell ${QUOTE_CURRENCY}`;
+    : `Sell ${BASE_CURRENCY}`;
 });
 
 const submit = () => {
